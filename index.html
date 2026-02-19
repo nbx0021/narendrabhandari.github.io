@@ -1,257 +1,515 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Data Analyst Portfolio</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css_files/index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narendra Bhandari | Data Engineer & Analyst</title>
+    <meta name="description" content="Portfolio of Narendra Bhandari - Data Engineer & Analyst specializing in BigQuery, PySpark, and Power BI.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#0a0a0a',
+                        glass: 'rgba(255, 255, 255, 0.05)',
+                        glassHover: 'rgba(255, 255, 255, 0.1)',
+                        primary: '#6366f1', // Indigo
+                        secondary: '#ec4899', // Pink
+                        accent: '#06b6d4', // Cyan
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'fade-up': 'fadeUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         body {
-            padding: 0 15px;
-            font-family: 'Calibri', sans-serif;
-            line-height: 1.6;
-            color: #333;
+            background-color: #050505;
+            color: #e5e5e5;
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-family: 'Roboto', sans-serif;
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(to right, #6366f1, #ec4899, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        header {
-            background: linear-gradient(135deg, #4e54c8, #8f94fb);
-            color: white;
-            padding: 100px 0;
-            text-align: center;
+        /* Nav Link Hover Effect */
+        .nav-link {
+            position: relative;
         }
-
-        header h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #6366f1;
+            transition: width 0.3s ease;
         }
-
-        section {
-            border: 2px solid transparent;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            margin: 20px 0;
-            padding: 20px;
-            border-radius: 5px;
-        }
-
-        section:hover {
-            border-color: #e0d431;
-            box-shadow: 0 0 10px #e0d431;
-        }
-
-        #about img {
+        .nav-link:hover::after {
             width: 100%;
-            max-width: 400px;
-            height: auto;
-            border-radius: 15px;
         }
 
-        .project-card {
-            height: 100%;
-            transition: transform 0.3s;
+        /* Hide elements before scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
         }
-
-        .project-card:hover {
-            transform: scale(1.05);
-        }
-
-        footer {
-            background-color: #f8f9fa;
-            padding: 15px;
-            text-align: center;
-            border-top: 1px solid #ddd;
-        }
-
-        footer p {
-            margin: 0;
-            font-size: 14px;
-            color: #6c757d;
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
+<body class="antialiased">
 
-<body>
-    <!-- Header Section -->
-    <header>
-        <h1>Welcome to My Portfolio!</h1>
-        <p class="lead">Transforming Data into Strategic Insights</p>
-    </header>
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-secondary/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-accent/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+    </div>
 
-
-
-    <section id="about" class="py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 about-me">
-                    <h2>About Me</h2>
-                    <p>
-                        I’m a Data Analyst with a BCA degree, specializing in turning data into actionable insights. Skilled in Python, 
-                        Django, and Flask, I build efficient applications and analyze data using Matplotlib, Seaborn, NumPy, Pandas, 
-                        and Scikit-learn. I create impactful dashboards and reports with Power BI, Tableau, and Looker, and manage databases
-                        with SQL and PostgreSQL. Proficient in Excel for advanced analysis, I leverage AI tools effectively to enhance productivity, 
-                        solve complex problems, and explore innovative solutions. Combining problem-solving and statistical methods, I make complex 
-                        data clear and actionable. My strong communication skills help bridge the gap between data and decision-makers, driving strategic, 
-                        data-informed decisions.
-                    </p>
-                </div>
-                <div class="col-lg-6 text-center">
-                    <img src="images/nbx_linkedin1.png" alt="About Image" class="img-fluid">
-                    <h4 class="about-name mt-3">Narendra Bhandari</h4> <!-- Name with class -->
-                    <p class="about-subtitle">Aspiring Data Analyst</p> <!-- Subtitle with class -->
-                </div>
-
-            </div>
-    </section>
-    <!-- Skills Section -->
-    <section id="skills" class="bg-light py-5">
-        <div class="container">
-            <h2 class="text-center">Skills</h2>
-            <div class="row">
-                <div class="col-md-4 text-center">
-                    <h4 class="skill-heading">Programming</h4>
-                    <div class="skill-button">Python</div>
-                    <div class="skill-button">Java</div>
-                    <div class="skill-button">C++</div>
-                </div>
-                <div class="col-md-4 text-center">
-                    <h4 class="skill-heading">Data Visualization</h4>
-                    <div class="skill-button">Power BI</div>
-                    <div class="skill-button">Tableau</div>
-                    <div class="skill-button">Looker</div>
-                </div>
-                <div class="col-md-4 text-center">
-                    <h4 class="skill-heading">Data Analysis</h4>
-                    <div class="skill-button">Pandas</div>
-                    <div class="skill-button">NumPy</div>
-                    <div class="skill-button">Excel</div>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-md-4 text-center">
-                    <h4 class="skill-heading">Machine Learning</h4>
-                    <div class="skill-button">Scikit-learn</div>
-                </div>
-                <div class="col-md-4 text-center">
-                    <h4 class="skill-heading">Databases</h4>
-                    <div class="skill-button">MySQL</div>
-                    <div class="skill-button">PostgreSQL</div>
-                    <div class="skill-button">Microsoft SQL Server</div>
-                </div>
-                <div class="col-md-4 text-center">
-                    <h4 class="skill-heading">Frameworks</h4>
-                    <div class="skill-button">Django</div>
-                    <div class="skill-button">Flask</div>
-                </div>
+    <nav class="fixed w-full z-50 top-0 start-0 border-b border-white/10 bg-dark/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="#" class="flex items-center space-x-2">
+                <span class="text-2xl font-display font-bold text-white tracking-tighter">NB<span class="text-primary">.</span></span>
+            </a>
+            <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-white/10 focus:outline-none" aria-controls="navbar-default" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                </svg>
+            </button>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-700 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
+                    <li><a href="#about" class="nav-link block py-2 px-3 text-white">About</a></li>
+                    <li><a href="#skills" class="nav-link block py-2 px-3 text-white">Skills</a></li>
+                    <li><a href="#projects" class="nav-link block py-2 px-3 text-white">Projects</a></li>
+                    <li><a href="#contact" class="nav-link block py-2 px-3 text-white">Contact</a></li>
+                </ul>
             </div>
         </div>
-    </section>
+    </nav>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-5">
-        <div class="container">
-            <h2 class="text-center">Projects</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card project-card">
-                        <img src="images/powerBi.jpg" class="card-img-top project-image" alt="Project 1">
-                        <!-- Add the project-image class here -->
-                        <div class="card-body">
-                            <h5 class="card-title"><strong>Business360 Dashboard</strong></h5>
-                            <p class="card-text">Replaced Excel reports with Power BI dashboards for 
-                                actionable insights and decision-making.</p>
-                        </div>
-                        <div class="text-center mt-2">
-                            <!-- Add a button for "See My Work" -->
-                            <a href="html_files/business360.html" class="btn btn-see-work align-self-end">
-                            <button class="btn btn-outline-primary" id="see-work-btn">
-                                See My Work <span class="arrow">→</span>
-                            </button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card project-card">
-                        <img src="images/Stock Market Prediction using ML Streamlit/Stock Market Prediction using Streamlit and Machine Learning.jpg" class="card-img-top project-image" alt="Project 2">
-                        <!-- Add the project-image class here -->
-                        <div class="card-body">
-                            <h5 class="card-title"><strong> Market Prediction using Streamlit and Machine Learning</strong></h5>
-                            <p class="card-text">This application predicts stock market prices using 
-                                historical data and machine learning models.</p>
-                        </div>
-                        <div class="text-center mt-2">
-                            <!-- Add a button for "See My Work" -->
-                            <a href="html_files/Stock_Market_Prediction_ML_Streamlit.html" class="btn btn-see-work align-self-end">
-                            <button class="btn btn-outline-primary" id="see-work-btn">
-                                See My Work <span class="arrow">→</span>
-                            </button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card project-card">
-                        <img src="images/Goodcabs/Goodcabs.jpg" class="card-img-top project-image" alt="Project 3">
-                        <!-- Add the project-image class here -->
-                        <div class="card-body">
-                            <h5 class="card-title"><strong>Data Analysis Project</strong> </h5>
-                            <p class="card-text">Analyzed trip data for Goodcabs to identify key performance trends, 
-                                optimize operational efficiency, 
-                                and enhance revenue growth through data-driven insights..</p>
-                        </div>
-                        <div class="text-center mt-4">
-                            <!-- Add a button for "See My Work" -->
-                            <a href="html_files/Goodcabs_Project.html" class="btn btn-see-work align-self-end">
-                            <button class="btn btn-outline-primary" id="see-work-btn">
-                                See My Work <span class="arrow">→</span>
-                            </button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+    <section class="min-h-screen flex items-center justify-center pt-20 relative">
+        <div class="text-center px-4 max-w-4xl mx-auto">
+            <div class="inline-block mb-4 px-4 py-1.5 rounded-full glass-card text-sm text-accent font-medium tracking-wide animate-fade-up">
+                ✨ Available for new opportunities
             </div>
-            <div class="text-center mt-4">
-                <a href="html_files/more_projects.html" class="btn btn-outline-primary">
-                    See More Projects <span class="arrow">→</span>
+            <h1 class="font-display text-5xl md:text-7xl font-bold mb-6 tracking-tight leading-tight animate-fade-up" style="animation-delay: 0.1s;">
+                Transforming Data into <br>
+                <span class="gradient-text">Strategic Insights</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto animate-fade-up" style="animation-delay: 0.2s;">
+                Hi, I'm <span class="text-white font-semibold">Narendra Bhandari</span>. A Data Engineer & Analyst building scalable pipelines and intelligent dashboards to solve complex business problems.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center animate-fade-up" style="animation-delay: 0.3s;">
+                <a href="#projects" class="px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-all transform hover:scale-105">
+                    View Work
+                </a>
+                <a href="#contact" class="px-8 py-4 glass-card text-white font-semibold rounded-full hover:bg-white/10 transition-all border border-white/10">
+                    Contact Me
                 </a>
             </div>
         </div>
     </section>
 
+    <div class="w-full border-y border-white/5 bg-white/5 py-10 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-center text-gray-500 text-sm mb-8 tracking-widest uppercase">Powering Analytics With</p>
+            
+            <div class="flex flex-wrap justify-center gap-6 md:gap-12 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+                
+                <div class="flex items-center gap-2 hover:text-primary transition-colors"><i class="fab fa-python text-2xl"></i> <span class="font-display font-bold text-lg">Python</span></div>
+                <div class="flex items-center gap-2 hover:text-accent transition-colors"><i class="fas fa-database text-2xl"></i> <span class="font-display font-bold text-lg">SQL</span></div>
+                <div class="flex items-center gap-2 hover:text-yellow-400 transition-colors"><i class="fas fa-chart-bar text-2xl"></i> <span class="font-display font-bold text-lg">Power BI</span></div>
+                <div class="flex items-center gap-2 hover:text-blue-400 transition-colors"><i class="fas fa-server text-2xl"></i> <span class="font-display font-bold text-lg">BigQuery</span></div>
+                <div class="flex items-center gap-2 hover:text-blue-500 transition-colors"><i class="fab fa-docker text-2xl"></i> <span class="font-display font-bold text-lg">Docker</span></div>
+                <div class="flex items-center gap-2 hover:text-orange-500 transition-colors"><i class="fas fa-fire text-2xl"></i> <span class="font-display font-bold text-lg">Spark</span></div>
+                
+                <div class="flex items-center gap-2 hover:text-blue-600 transition-colors"><i class="fas fa-dharmachakra text-2xl"></i> <span class="font-display font-bold text-lg">Kubernetes</span></div>
+                <div class="flex items-center gap-2 hover:text-red-500 transition-colors"><i class="fas fa-cubes text-2xl"></i> <span class="font-display font-bold text-lg">Databricks</span></div>
+                <div class="flex items-center gap-2 hover:text-orange-400 transition-colors"><i class="fas fa-layer-group text-2xl"></i> <span class="font-display font-bold text-lg">dbt</span></div>
+                
+                <div class="flex items-center gap-2 hover:text-white transition-colors"><i class="fab fa-github text-2xl"></i> <span class="font-display font-bold text-lg">GitHub Actions</span></div>
+                <div class="flex items-center gap-2 hover:text-green-400 transition-colors"><i class="fas fa-sync text-2xl"></i> <span class="font-display font-bold text-lg">CI/CD</span></div>
+                <div class="flex items-center gap-2 hover:text-purple-400 transition-colors"><i class="fas fa-robot text-2xl"></i> <span class="font-display font-bold text-lg">Automation</span></div>
+                
+                <div class="flex items-center gap-2 hover:text-yellow-500 transition-colors"><i class="fas fa-chart-line text-2xl"></i> <span class="font-display font-bold text-lg">Pandas & NumPy</span></div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Let's Connect Section -->
-    <section id="connect" class="bg-light py-5 text-center">
-        <h2>Let's Connect</h2>
-        <div class="connect-items">
-            <a href="https://www.linkedin.com/in/narendrabhandari21/"><img src="images/linkedin.png" alt="LinkedIn"
-                    class="connect-logo"></a>
-            <a href="https://github.com/nbx0021/"><img src="images/github.png" alt="GitHub" class="connect-logo"></a>
-            <a href="mailto:narendrasinghbhandari@gmail.com"><img src="images/email.png" alt="Email Logo"
-                    class="connect-logo"></a>
+    <section id="about" class="py-24 px-4 relative">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center reveal">
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                    <div class="relative glass-card rounded-2xl p-2">
+                        <img src="assets/images/profile.png" onerror="this.src='https://ui-avatars.com/api/?name=Narendra+Bhandari&background=random&size=500'" alt="Narendra Bhandari" class="rounded-xl w-full object-cover shadow-2xl">
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold mb-6">Beyond the <span class="text-primary">Spreadsheet</span></h2>
+                    <div class="space-y-4 text-gray-400 leading-relaxed">
+                    <div class="space-y-4 text-gray-400 leading-relaxed">
+                        <p>
+                            As a hybrid <strong>Data Engineer and Analyst</strong>, I bridge the critical gap between raw infrastructure and strategic business decisions. With a solid foundation in Computer Applications (BCA), I don't just analyze data—I architect the end-to-end ecosystems that make analytics possible.
+                        </p>
+                        <p>
+                            I specialize in owning the complete data lifecycle. On the engineering front, I build resilient, serverless pipelines and scalable lakehouse architectures using <strong>PySpark, Databricks, BigQuery, and Docker</strong>. On the analytics front, I translate those complex datasets into clear, actionable narratives using <strong>Python, advanced SQL, and Power BI</strong>, ensuring stakeholders can trust the numbers.
+                        </p>
+                        <p>
+                            Beyond the technical stack—leveraging modern tools like <strong>dbt and GitHub Actions</strong> for CI/CD and orchestration—I bring strong domain awareness, particularly in financial analytics and market trends. I treat data as a strategic asset, engineering pipelines and deploying models with a singular focus: empowering businesses to operate smarter, faster, and with absolute clarity.
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mt-8">
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/10">
+                            <h3 class="text-2xl font-bold text-white mb-1">10+</h3>
+                            <p class="text-sm text-gray-500">Dashboards Created</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/10">
+                            <h3 class="text-2xl font-bold text-white mb-1">10+</h3>
+                            <p class="text-sm text-gray-500">End-to-End Projects</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Narendra Singh Bhandari. All Rights Reserved.</p>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-oBqDVmMz4fnFO9gyb3yjpVQbA0nq0mZTRXKbG00R8N6jP6xNU4Y+MlKmxDHeo5i8"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-        integrity="sha384-W6F3VZt+T3bVgLfQiJx9GAJIDN7U8d48n+LRT3mVgm2qRE0bDI6bw80FezNF2mAf"
-        crossorigin="anonymous"></script>
-</body>
+    <section id="skills" class="py-24 px-4 bg-white/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">Technical <span class="text-secondary">Arsenal</span></h2>
+                <p class="text-gray-400">Tools and technologies I use to bring data to life.</p>
+            </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+                <div class="glass-card p-6 rounded-2xl hover:bg-white/5 transition-colors">
+                    <div class="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center mb-4 text-primary">
+                        <i class="fas fa-code text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Languages</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">Python</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">SQL</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">Java</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">DAX</span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl hover:bg-white/5 transition-colors">
+                    <div class="w-12 h-12 rounded-lg bg-secondary/20 flex items-center justify-center mb-4 text-secondary">
+                        <i class="fas fa-chart-pie text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Visualization</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">Power BI</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">Tableau</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">Matplotlib</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">Seaborn</span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl hover:bg-white/5 transition-colors">
+                    <div class="w-12 h-12 rounded-lg bg-accent/20 flex items-center justify-center mb-4 text-accent">
+                        <i class="fas fa-cogs text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Engineering</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">dbt</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">BigQuery</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">Docker</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">PySpark</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">Databricks</span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl hover:bg-white/5 transition-colors">
+                    <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center mb-4 text-purple-400">
+                        <i class="fas fa-brain text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Frameworks</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">Pandas</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">Scikit-learn</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">Django</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">Flask</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/10">GitHub Actions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-24 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal">
+                <div>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold mb-2">Selected <span class="gradient-text">Work</span></h2>
+                    <p class="text-gray-400">Engineering pipelines and visualizing success.</p>
+                </div>
+                <a href="https://github.com/nbx0021/" target="_blank" class="hidden md:flex items-center gap-2 text-white hover:text-primary transition-colors mt-4 md:mt-0">
+                    View GitHub <i class="fas fa-arrow-right text-sm"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="group relative rounded-2xl overflow-hidden glass-card hover:-translate-y-2 transition-all duration-300 reveal">
+                    <div class="h-48 bg-gray-800 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent z-10 opacity-60"></div>
+                        <img src="assets/images/arth-insight.png" alt="Arth-Insight" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-3">
+                            <span class="text-xs font-semibold text-primary bg-primary/10 px-2 py-1 rounded">Fintech</span>
+                            <span class="text-xs font-semibold text-accent bg-accent/10 px-2 py-1 rounded">Engineering</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">Arth-Insight</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">A Financial Analytics Engine utilizing dbt for transformation, BigQuery for warehousing, and Docker for containerization.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs text-gray-500">dbt</span>
+                            <span class="text-xs text-gray-500">BigQuery</span>
+                            <span class="text-xs text-gray-500">Docker</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-white/10 pt-4">
+                            <a href="https://arth-insight-ding.onrender.com/" class="text-white text-sm font-medium hover:text-primary transition-colors">Live Demo</a>
+                            <a href="https://github.com/nbx0021/arth-insight" class="text-gray-400 hover:text-white"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-2xl overflow-hidden glass-card hover:-translate-y-2 transition-all duration-300 reveal">
+                    <div class="h-48 bg-gray-800 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent z-10 opacity-60"></div>
+                        <img src="assets/images/e_commerce.png" alt="E-Commerce" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-3">
+                            <span class="text-xs font-semibold text-secondary bg-secondary/10 px-2 py-1 rounded">Big Data</span>
+                            <span class="text-xs font-semibold text-purple-400 bg-purple-400/10 px-2 py-1 rounded">Lakehouse</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">E-Commerce Data Pipeline</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">In-Memory Lakehouse architecture processing transaction data with PySpark and Databricks.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs text-gray-500">PySpark</span>
+                            <span class="text-xs text-gray-500">Databricks</span>
+                            <span class="text-xs text-gray-500">Delta Lake</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-white/10 pt-4">
+                            <a href="https://github.com/nbx0021/Ecommerce-Data-Analysis-with-PySpark-" class="text-white text-sm font-medium hover:text-primary transition-colors">View Demo</a>
+                            <a href="https://github.com/nbx0021/Ecommerce-Data-Analysis-with-PySpark-" class="text-gray-400 hover:text-white"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-2xl overflow-hidden glass-card hover:-translate-y-2 transition-all duration-300 reveal">
+                    <div class="h-48 bg-gray-800 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent z-10 opacity-60"></div>
+                        <img src="assets/images/youtube.png" alt="YouTube Intelligence" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-3">
+                            <span class="text-xs font-semibold text-red-500 bg-red-500/10 px-2 py-1 rounded">Automation</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">YouTube Velocity v4.0</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Automated data extraction and trend analysis pipeline using GitHub Actions and BigQuery.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs text-gray-500">Python</span>
+                            <span class="text-xs text-gray-500">GitHub Actions</span>
+                            <span class="text-xs text-gray-500">BigQuery</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-white/10 pt-4">
+                            <a href="https://youtube-velocity-tracker.streamlit.app/" class="text-white text-sm font-medium hover:text-primary transition-colors">Live demo</a>
+                            <a href="https://github.com/nbx0021/youtube-analytics-pipeline" class="text-gray-400 hover:text-white"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-2xl overflow-hidden glass-card hover:-translate-y-2 transition-all duration-300 reveal">
+                    <div class="h-48 bg-gray-800 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent z-10 opacity-60"></div>
+                        <img src="assets/images/financial view.png" alt="Business 360" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-3">
+                            <span class="text-xs font-semibold text-primary bg-primary/10 px-2 py-1 rounded">Business Insights</span>
+                            <span class="text-xs font-semibold text-accent bg-accent/10 px-2 py-1 rounded">Power Query</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">Business 360</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Comprehensive Brick & Mortar and E-commerce dashboard offering 360-degree business insights.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs text-gray-500">Power BI</span>
+                            <span class="text-xs text-gray-500">DAX</span>
+                            <span class="text-xs text-gray-500">SQL</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-white/10 pt-4">
+                            <a href="https://app.powerbi.com/view?r=eyJrIjoiN2YwNjMyMDgtMDRjMC00ZDYwLTk0Y2YtYWZmMGM0MDM0MDk2IiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9" class="text-white text-sm font-medium hover:text-primary transition-colors">View Dashboard</a>
+                            <a href="https://github.com/nbx0021/Business-Insights-360" class="text-gray-400 hover:text-white"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-2xl overflow-hidden glass-card hover:-translate-y-2 transition-all duration-300 reveal">
+                    <div class="h-48 bg-gray-800 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent z-10 opacity-60"></div>
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800" alt="Shield Insurance" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-3">
+                            <span class="text-xs font-semibold text-primary bg-primary/10 px-2 py-1 rounded">Insurance</span>
+                            <span class="text-xs font-semibold text-accent bg-accent/10 px-2 py-1 rounded">Power Query</span>
+                            <span class="text-xs font-semibold text-secondary bg-secondary/10 px-2 py-1 rounded">Visualizations</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">Shield Insurance</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Risk assessment and policy analysis dashboard empowering data-driven insurance strategies.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs text-gray-500">Excel</span>
+                            <span class="text-xs text-gray-500">Power BI</span>
+                            <span class="text-xs text-gray-500">SQL</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-white/10 pt-4">
+                            <a href="https://app.powerbi.com/view?r=eyJrIjoiNzRiODI5OWQtZDA0OS00OGZmLTg2NWMtNGIyNzM5MjkyNGJhIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9" class="text-white text-sm font-medium hover:text-primary transition-colors">View Report</a>
+                            <a href="https://github.com/nbx0021/Shield-Insurance-Analysis" class="text-gray-400 hover:text-white"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="group relative rounded-2xl overflow-hidden glass-card hover:-translate-y-2 transition-all duration-300 reveal">
+                    <div class="h-48 bg-gray-800 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent z-10 opacity-60"></div>
+                        <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800" alt="Good Cabs" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-semibold text-accent bg-accent/10 px-2 py-1 rounded">Python Notebook</span>
+                            <span class="text-xs font-semibold text-secondary bg-secondary/10 px-2 py-1 rounded">Visualizations</span>
+                        <h3 class="text-xl font-bold mb-2 text-white">Good-cabs Analysis</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Transport data analysis optimizing route efficiency and fleet allocation.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs text-gray-500">Pandas</span>
+                            <span class="text-xs text-gray-500">Matplotlib</span>
+                            <span class="text-xs text-gray-500">Seaborn</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-white/10 pt-4">
+                            <a href="https://github.com/nbx0021/Goodcabs-Data-Analysis-Project" class="text-white text-sm font-medium hover:text-primary transition-colors">View Notebook</a>
+                            <a href="https://github.com/nbx0021/Goodcabs-Data-Analysis-Project" class="text-gray-400 hover:text-white"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="https://github.com/nbx0021" class="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors border-b border-transparent hover:border-white pb-1">
+                    See Project Archive <i class="fas fa-archive text-xs"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 px-4 bg-gradient-to-b from-dark to-black">
+        <div class="max-w-4xl mx-auto text-center reveal">
+            <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">Ready to <span class="gradient-text">Collaborate?</span></h2>
+            <p class="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
+                Whether you have a question, a project idea, or just want to discuss the latest in Data Engineering, my inbox is always open.
+            </p>
+            
+            <div class="flex flex-col md:flex-row gap-6 justify-center items-center mb-16">
+                <a href="mailto:narendrabhandari707@gmail.com" class="flex items-center gap-3 px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-transform hover:scale-105">
+                    <i class="fas fa-envelope"></i> Send Email
+                </a>
+                <a href="https://www.linkedin.com/in/narendrabhandari21/" class="flex items-center gap-3 px-8 py-4 glass-card text-white font-bold rounded-full hover:bg-white/10 transition-transform hover:scale-105">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+            </div>
+
+            <div class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2026 Narendra Bhandari. All rights reserved.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="https://github.com/nbx0021" class="hover:text-white transition-colors">Github</a>
+                    <a href="https://www.linkedin.com/in/narendrabhandari21/" class="hover:text-white transition-colors">LinkedIn</a>
+                    <a href="#" class="hover:text-white transition-colors">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Reveal Animations on Scroll
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+    </script>
+</body>
 </html>
