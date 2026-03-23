@@ -1,1 +1,26 @@
-archive
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Production
+build/
+
+# Misc
+*.pem
+.DS_Store
+
+# Debug
+npm-debug.log*
+
+# Env
+.env*.local
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Archive (old static files)
+archive/
