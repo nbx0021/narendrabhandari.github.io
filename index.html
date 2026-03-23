@@ -234,6 +234,9 @@
                 <div class="flex items-center gap-2 hover:text-orange-400 transition-colors"><i
                         class="fas fa-layer-group text-2xl"></i> <span class="font-display font-bold text-lg">dbt</span>
                 </div>
+                <div class="flex items-center gap-2 hover:text-teal-400 transition-colors"><i
+                        class="fas fa-wind text-2xl"></i> <span class="font-display font-bold text-lg">Airflow</span>
+                </div>
 
                 <div class="flex items-center gap-2 hover:text-white transition-colors"><i
                         class="fab fa-github text-2xl"></i> <span class="font-display font-bold text-lg">GitHub
@@ -397,6 +400,66 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <div
+                    class="group relative rounded-2xl overflow-hidden glass-card hover:-translate-y-2 transition-all duration-300 reveal">
+                    <div class="h-48 bg-gray-800 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent z-10 opacity-60"></div>
+                        <img src="assets/images/finbert_thumbnail.png" alt="FinBERT Sentiment Engine"
+                            onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=800'"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-3">
+                            <span
+                                class="text-xs font-semibold text-secondary bg-secondary/10 px-2 py-1 rounded">NLP</span>
+                            <span class="text-xs font-semibold text-accent bg-accent/10 px-2 py-1 rounded">Data
+                                Pipeline</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">FinBERT Sentiment Engine</h3>
+                        <p class="text-gray-400 text-sm mb-3">AI-Powered Financial Data Pipeline integrating NewsAPI,
+                            Hugging Face models, and Supabase for semantic search.</p>
+
+                        <details class="group/details mb-4">
+                            <summary class="text-primary text-xs cursor-pointer select-none font-medium outline-none">
+                                Project Details <i
+                                    class="fas fa-chevron-down ml-1 text-[10px] group-open/details:rotate-180 transition-transform"></i>
+                            </summary>
+                            <ul class="text-gray-400 text-xs mt-3 space-y-2 list-disc pl-4 marker:text-primary/50">
+                                <li><strong>Resilient Data Ingestion:</strong> Engineered a fault-tolerant extraction
+                                    layer integrating NewsAPI and GNews RSS feeds, implementing automated failover logic
+                                    and defensive parsing to bypass strict free-tier rate limits and ensure continuous
+                                    ingestion of messy web data.</li>
+                                <li><strong>AI-Enriched Medallion Architecture:</strong> Orchestrated a
+                                    Bronze/Silver/Gold pipeline that runs three specialized Hugging Face models natively
+                                    on GPU, utilizing FinBERT for tone detection and BERT-NER to map extracted company
+                                    names directly to regional NSE/NYSE stock tickers.</li>
+                                <li><strong>Semantic Search Implementation:</strong> Stored structured outputs and
+                                    vector embeddings in Supabase (PostgreSQL), utilizing the pgvector extension and
+                                    custom RPC functions to enable cosine-distance semantic search, replacing rigid SQL
+                                    keyword queries with conceptual context matching.</li>
+                                <li><strong>Cross-Domain Financial Analytics:</strong> Developed daily synchronization
+                                    tasks with yfinance to merge unstructured NLP sentiment data with structured
+                                    end-of-day stock prices, building complex SQL views to generate daily 'Market Mood'
+                                    indicators and price-correlation signals.</li>
+                            </ul>
+                        </details>
+
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs text-gray-500">Python</span>
+                            <span class="text-xs text-gray-500">Hugging Face</span>
+                            <span class="text-xs text-gray-500">Supabase</span>
+                            <span class="text-xs text-gray-500">pgvector</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-white/10 pt-4">
+                            <a href="https://github.com/nbx0021/finbert-sentiment-engine"
+                                class="text-white text-sm font-medium hover:text-primary transition-colors">View
+                                Github</a>
+                            <a href="https://github.com/nbx0021" class="text-gray-400 hover:text-white"><i
+                                    class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
 
                 <div
                     class="group relative rounded-2xl overflow-hidden glass-card hover:-translate-y-2 transition-all duration-300 reveal">
